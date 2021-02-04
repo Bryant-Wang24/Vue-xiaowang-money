@@ -1,3 +1,12 @@
 module.exports = {
-  lintOnSave: false
+  lintOnSave: false,
+  configureWebpack: {},
+  devServer: { // 环境配置
+    host: '0.0.0.0',
+    public: '192.168.1.103:8080',
+    port: '8080',
+    https: false,
+    disableHostCheck: true,
+    open: false // 配置自动启动浏览器
+  },
 }
