@@ -13,43 +13,19 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import {Component} from 'vue-property-decorator';
+import {Component, Prop} from 'vue-property-decorator';
 
-@Component({
-  props:{
-    propMessage:String
-  }
-})
-export default class Types extends Vue{
+@Component
+export default class Types extends Vue {
   type = '-';//'-'表示支出，'+'表示收入
-  helloMsg = 'Hello,'+this.proMessage
-  selectType(type: string){
-    if (type!=='-'&& type!=='+'){
-      throw new Error('type is unknown')
+
+  selectType(type: string) {
+    if (type !== '-' && type !== '+') {
+      throw new Error('type is unknown');
     }
     this.type = type;
   }
 }
-// export default {
-//   name: 'Types',
-//   props:['xxx'],
-//   data(){
-//     return{
-//       type:'-'//'-'表示支出，'+'表示收入
-//     }
-//   },
-//   mounted() {
-//     console.log(this.xxx)
-//   },
-//   methods:{
-//     selectType(type){
-//       if (type!=='-' && type!=='+'){
-//         throw new Error('type is unknown')
-//       }
-//       this.type=type
-//     }
-//   }
-// };
 </script>
 
 <style lang="scss" scoped>
