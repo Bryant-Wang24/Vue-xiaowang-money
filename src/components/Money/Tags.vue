@@ -4,21 +4,32 @@
       <button>新增按钮</button>
     </div>
     <ul class="current">
-      <li>服饰</li>
-      <li>餐饮</li>
-      <li>住房</li>
-      <li>交通</li>
-      <li>医疗</li>
-      <li>购物</li>
-      <li>娱乐</li>
-      <li>教育</li>
+      <li v-for="tag in dataSource" :key="tag"
+          :class="{selected:selectedTags.indexOf(tag)>=0}"
+          @click="toggle(tag)"
+      >{{ tag }}
+      </li>
     </ul>
   </div>
 </template>
 
 <script lang="ts">
-export default {
-name: "Tags"
+import Vue from 'vue';
+import {Component, Prop} from 'vue-property-decorator';
+
+@Component
+export default class Tags extends Vue {
+  @Prop() dataSource: string[] | undefined;
+  selectedTags: string[] = [];
+
+  toggle(tag: string) {
+    const index = this.selectedTags.indexOf(tag);
+    if (index >= 0) {
+      this.selectedTags.splice(index, 1);
+    } else {
+      this.selectedTags.push(tag);
+    }
+  }
 }
 </script>
 
@@ -43,6 +54,10 @@ name: "Tags"
       padding: 0 16px;
       margin-right: 12px;
       margin-top: 12px;
+
+      &.selected {
+        background: #ffda47;
+      }
     }
   }
 
