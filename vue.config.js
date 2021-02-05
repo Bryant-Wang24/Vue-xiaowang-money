@@ -4,8 +4,8 @@ module.exports = {
   configureWebpack: {},
   devServer: { // 环境配置
     host: '0.0.0.0',
-    public: '192.168.1.103:8080',
-    port: '8080',
+    public: '192.168.1.100:8081',
+    port: '8081',
     https: false,
     disableHostCheck: true,
     open: false // 配置自动启动浏览器
