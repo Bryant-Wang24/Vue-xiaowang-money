@@ -1,6 +1,5 @@
 <template>
   <Layout class-prefix="layout">
-    {{record}}
     <NumberPad :value.sync="record.amount" @submit="saveRecord"/>
     <div class="notes">
       <FormItem field-name="备注" placeholder="在这里输入备注" @update:value="onUpdateNotes"></FormItem>
@@ -21,14 +20,14 @@ import tagListModel from '@/models/tagListModel';
 import FormItem from '@/components/Money/FormItem.vue';
 
 const recordList = recordListModel.fetch();
-const tagList = tagListModel.fetch()
+const tagList = tagListModel.fetch();
 
 @Component({
   components: {FormItem, Tags, Types, NumberPad}
 })
 
 export default class Money extends Vue {
-  tags =tagList; //['服饰', '餐饮', '住房', '交通', '医疗', '购物', '娱乐', '教育'];
+  tags = tagList; //['服饰', '餐饮', '住房', '交通', '医疗', '购物', '娱乐', '教育'];
   recordList: RecordItem[] = recordList;
   record: RecordItem = {
     tags: [], notes: '', type: '-', amount: 0
@@ -61,7 +60,8 @@ export default class Money extends Vue {
   display: flex;
   flex-direction: column-reverse;
 }
-.notes{
+
+.notes {
   padding: -2px 0;
 }
 </style>
