@@ -16,6 +16,7 @@ import Tags from '@/components/Money/Tags.vue';
 import Types from '@/components/Money/Types.vue';
 import {Component} from 'vue-property-decorator';
 import FormItem from '@/components/Money/FormItem.vue';
+import store from '@/store/index2';
 
 
 @Component({
@@ -23,8 +24,8 @@ import FormItem from '@/components/Money/FormItem.vue';
 })
 
 export default class Money extends Vue {
-  tags = window.tagList; //['服饰', '餐饮', '住房', '交通', '医疗', '购物', '娱乐', '教育'];
-  recordList = window.recordList;
+  tags = store.tagList; //['服饰', '餐饮', '住房', '交通', '医疗', '购物', '娱乐', '教育'];
+  recordList = store.recordList;
   record: RecordItem = {
     tags: [], notes: '', type: '-', amount: 0
   };
@@ -38,7 +39,7 @@ export default class Money extends Vue {
   }
 
   saveRecord() {
-    window.createRecord(this.record);
+    store.createRecord(this.record);
   }
 }
 </script>
