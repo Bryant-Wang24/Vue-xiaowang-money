@@ -20,14 +20,13 @@ import tagListModel from '@/models/tagListModel';
 import FormItem from '@/components/Money/FormItem.vue';
 
 const recordList = recordListModel.fetch();
-const tagList = tagListModel.fetch();
 
 @Component({
   components: {FormItem, Tags, Types, NumberPad}
 })
 
 export default class Money extends Vue {
-  tags = tagList; //['服饰', '餐饮', '住房', '交通', '医疗', '购物', '娱乐', '教育'];
+  tags = window.tagList; //['服饰', '餐饮', '住房', '交通', '医疗', '购物', '娱乐', '教育'];
   recordList: RecordItem[] = recordList;
   record: RecordItem = {
     tags: [], notes: '', type: '-', amount: 0
@@ -42,7 +41,7 @@ export default class Money extends Vue {
   }
 
   saveRecord() {
-    recordListModel.create(this.record)
+    recordListModel.create(this.record);
   }
 
   @Watch('recordList')
