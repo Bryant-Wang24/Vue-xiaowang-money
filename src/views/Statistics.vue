@@ -19,9 +19,12 @@
     background: #feda46;
 
     &::after {
-      //display: none;
+      display: none;
     }
   }
+}
+::v-deep .interval-tabs-item {
+  height: 48px;
 }
 </style>
 
