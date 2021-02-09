@@ -12,20 +12,25 @@
 
 
 <style lang="scss" scoped>
-::v-deep .type-tabs-item {
-  background: white;
+::v-deep {
+  .type-tabs-item {
+    background: white;
 
-  &.selected {
-    background: #feda46;
+    &.selected {
+      background: #feda46;
 
-    &::after {
-      display: none;
+      &::after {
+        display: none;
+      }
     }
   }
-}
-::v-deep .interval-tabs-item {
-  height: 48px;
-}
+    .interval-tabs-item {
+      font-size: 20px;
+      /*height: 48px;*/
+    }
+  }
+
+
 </style>
 
 <script lang="ts">
@@ -42,6 +47,6 @@ export default class Statistics extends Vue {
   type = '-';
   interval = 'day';
   intervalList = intervalList;
-  recordTypeList = recordTypeList
+  recordTypeList = recordTypeList;
 }
 </script>
