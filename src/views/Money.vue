@@ -29,7 +29,6 @@ export default class Money extends Vue {
   }
   recordTypeList = recordTypeList
 
-  //['服饰', '餐饮', '住房', '交通', '医疗', '购物', '娱乐', '教育'];
 
   record: RecordItem = {
     tags: [], notes: '', type: '-', amount: 0
@@ -45,6 +44,9 @@ export default class Money extends Vue {
 
   saveRecord() {
     this.$store.commit('createRecord', this.record);
+    if (this.$store.state.createRecordError===null){
+      window.alert('已保存')
+    }
   }
 }
 </script>
