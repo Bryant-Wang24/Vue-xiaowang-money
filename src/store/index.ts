@@ -52,7 +52,7 @@ const store = new Vuex.Store({
     },
     createRecord(state, record) {
       const record2: RecordItem = clone(record);
-      record2.createdAt = new Date().toISOString();
+      record2.createdAt = record2.createdAt || new Date().toISOString();
       state.recordList.push(record2);
       store.commit('saveRecords');
     },
@@ -71,6 +71,7 @@ const store = new Vuex.Store({
         store.commit('createTag', '购物');
         store.commit('createTag', '娱乐');
         store.commit('createTag', '教育');
+        store.commit('createTag', '工资');
       }
     },
     createTag(state, name: string) {
