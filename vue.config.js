@@ -4,7 +4,7 @@ module.exports = {
   configureWebpack: {},
   devServer: { // 环境配置
     host: '0.0.0.0',
-    public: '192.168.1.101:8081',
+    public: '192.168.1.102:8081',
     port: '8081',
     https: false,
     disableHostCheck: true,
