@@ -1,7 +1,9 @@
 <template>
   <Layout>
     <Tabs class-prefix="type" :data-source="recordTypeList" :value.sync="type"/>
-    <Chart :options="x"/>
+    <div class="chart-wrapper" ref="chartWrapper">
+      <Chart class="chart" :options="x"/>
+    </div>
     <ol v-if="groupedList.length>0">
       <li v-for="(group, index) in groupedList" :key="index">
         <h3 class="title">{{ beautify(group.title) }} <span>￥{{ group.total }}</span></h3>
@@ -33,11 +35,15 @@ import clone from '@/lib/clone';
 import Chart from '@/components/Chart.vue';
 
 @Component({
-  components: {Tabs,Chart},
+  components: {Tabs, Chart},
 })
 export default class Statistics extends Vue {
   tagString(tags: Tag[]) {
-    return tags.length === 0 ? "无" : tags.map(t => t.name).join('，');
+    return tags.length === 0 ? '无' : tags.map(t => t.name).join('，');
+  }
+
+  mounted() {
+    (this.$refs.chartWrapper as HTMLDivElement).scrollLeft = 9999;
   }
 
   beautify(string: string) {
@@ -59,18 +65,28 @@ export default class Statistics extends Vue {
 
   get x() {
     return {
+      grid:{
+        left:0,
+        right:0,
+      },
       xAxis: {
         type: 'category',
         data: [
           '1', '2', '3', '4', '5', '6', '7', '8', '9', '10',
           '11', '12', '13', '14', '15', '16', '17', '18', '19', '20',
           '21', '22', '23', '24', '25', '26', '27', '28', '29', '30',
-        ]
+        ],
+        axisTick:{alignWithLabel:true},
+        axisLine:{lineStyle:{color:'#666'}}
       },
       yAxis: {
-        type: 'value'
+        type: 'value',
+        show: false
       },
       series: [{
+        symbol:'circle',
+        symbolSize:12,
+        itemStyle:{borderWidth:1,color: '#666',borderColor:'#666'},
         data: [
           820, 932, 901, 934, 1290, 1330, 1320,
           820, 932, 901, 934, 1290, 1330, 1320,
@@ -79,7 +95,10 @@ export default class Statistics extends Vue {
         ],
         type: 'line'
       }],
-      tooltip: {show: true}
+      tooltip: {show: true,triggerOn:'click',
+      position:'top',
+        formatter:'{c}'
+      }
     };
   }
 
@@ -92,7 +111,7 @@ export default class Statistics extends Vue {
     const newList = clone(recordList)
         .filter(r => r.type === this.type)
         .sort((a, b) => dayjs(b.createdAt).valueOf() - dayjs(a.createdAt).valueOf());
-  if (newList.length===0){return [] as Result}
+    if (newList.length === 0) {return [] as Result;}
     type Result = { title: string; total?: number; items: RecordItem[] }[]
     const result: Result = [{title: dayjs(newList[0].createdAt).format('YYYY-MM-DD'), items: [newList[0]]}];
     for (let i = 1; i < newList.length; i++) {
@@ -114,12 +133,12 @@ export default class Statistics extends Vue {
     return result;
   }
 
-beforeCreate() {
-  this.$store.commit('fetchRecords');
-}
+  beforeCreate() {
+    this.$store.commit('fetchRecords');
+  }
 
-type = '-';
-recordTypeList = recordTypeList;
+  type = '-';
+  recordTypeList = recordTypeList;
 }
 </script>
 
@@ -128,10 +147,12 @@ recordTypeList = recordTypeList;
   max-width: 100%;
   height: 400px;
 }
+
 .noResult {
   padding: 16px;
   text-align: center;
 }
+
 ::v-deep {
   .type-tabs-item {
     background: white;
@@ -149,6 +170,7 @@ recordTypeList = recordTypeList;
     height: 48px;
   }
 }
+
 %item {
   padding: 8px 16px;
   line-height: 24px;
@@ -156,16 +178,28 @@ recordTypeList = recordTypeList;
   justify-content: space-between;
   align-content: center;
 }
+
 .title {
   @extend %item;
 }
+
 .record {
   background: white;
   @extend %item;
 }
+
 .notes {
   margin-right: auto;
   margin-left: 16px;
   color: #999;
+}
+.chart {
+  width: 430%;
+  &-wrapper {
+    overflow: auto;
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
 }
 </style>
