@@ -1,5 +1,6 @@
 const path = require('path')
 module.exports = {
+  publicPath: './',
   lintOnSave: false,
   configureWebpack: {},
   devServer: { // 环境配置
